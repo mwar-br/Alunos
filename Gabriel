@@ -1,0 +1,21 @@
+using UnityEngine;
+
+public class ControladorDoPersonagem : MonoBehaviour
+{
+    public float forcaDoPulo = 10f; // Ajuste conforme necessário para obter o salto desejado
+
+    private Rigidbody2D rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, forcaDoPulo);
+        }
+    }
+}
