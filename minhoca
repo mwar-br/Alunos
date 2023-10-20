@@ -1,0 +1,26 @@
+public class WormController : MonoBehaviour {
+    public Transform[] bodyParts; // Array de Transform para as partes do corpo
+
+    void Update() {
+        for (int i = bodyParts.Length - 1; i > 0; i--) {
+            bodyParts[i].position = bodyParts[i - 1].position;
+            bodyParts[i].rotation = bodyParts[i - 1].rotation;
+        }
+
+        // Atualiza a posição da primeira parte para seguir o mouse
+        bodyParts[0].position = GetMouseWorldPosition();
+        bodyParts[0].rotation = Quaternion.Euler(0, 0, GetMouseAngle());
+    }
+
+    Vector3 GetMouseWorldPosition() {
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = -Camera.main.transform.position.z;
+        return Camera.main.ScreenToWorldPoint(mousePosition);
+    }
+
+    float GetMouseAngle() {
+        Vector3 mousePosition = GetMouseWorldPosition();
+        Vector3 direction = mousePosition - bodyParts[0].position;
+        return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    }
+}
